@@ -1,0 +1,14 @@
+﻿<div class="container">
+    <div class="row" *ngFor="let image of _photos">
+        <div class="col-lg-6 col-md-6 col-xs-6 col-md-offset-3 picture-box" >
+            <div><h3>{{image.Username}}</h3></div>
+            <div><small> <i class="fa fa-calendar"></i>&nbsp; {{convertDateTime(image.DateUploaded)}}</small></div>
+            <a class="fancybox" rel="gallery" href="{{image.Uri}}">
+                <img src="{{image.Uri}}" alt="{{image.Title}}" class="img img-responsive full-width thumbnail" />
+            </a>
+            <hr />
+        </div>
+        
+    </div>
+</div>
+
