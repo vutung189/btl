@@ -1,47 +1,65 @@
 ﻿<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h1 class="text-center">
-                    <span class="fa-stack fa-1x">
-                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-user fa-stack-1x fa-inverse"></i>
-                    </span>Login
-                </h1>
-            </div>
             <div class="modal-body">
-                <form class="form col-md-12 center-block" #loginForm="ngForm">
-                    <div class="form-group">
-                        <input type="text" class="form-control input-lg" placeholder="Username" [(ngModel)]="_user.Username"
-                               name="username" id="username" #username="ngModel" required />
-                        <div [hidden]="username.valid || username.untouched" class="alert alert-danger">
-                            Username is required
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">Sign In</div>
+                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
+                    </div>
+
+                    <div style="padding-top:30px" class="panel-body">
+                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                        <form class="form-horizontal" role="form" #loginForm="ngForm">
+
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" class="form-control " placeholder="Username" [(ngModel)]="_user.Username"
+                                       name="username" id="username" #username="ngModel" required />
+                            </div>
+
+
+                            <div style="margin-bottom: 25px" class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+
+                                <input type="password" class="form-control" placeholder="Password" [(ngModel)]="_user.Password"
+                                       name="password" id="password" #password="ngModel" required />
+                            </div>
+
+                            <div class="input-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" [(ngModel)]="_user.RememberMe" name="remember"> Remember me
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div style="margin-top:10px" class="form-group">
+                                <!-- Button -->
+                                <div class="col-sm-12 controls">
+
+                                    <button class="btn btn-primary" (click)="login()" [disabled]="!loginForm.form.valid">Sign In</button>
+
+                                    <a class="btn btn-danger pull-right" [routerLink]="['/home']" data-dismiss="modal" aria-hidden="true">Cancel</a>
+
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="col-md-12 ">
+                            <div style="font-size:85%" class="pull-left">
+                                Don't have an account!
+                                <a [routerLink]="['/account/register']">Register</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control input-lg" placeholder="Password" [(ngModel)]="_user.Password"
-                               name="password" id="password" #password="ngModel" required/>
-                        <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
-                            Password is required
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-lg btn-block" (click)="login()" [disabled]="!loginForm.form.valid">Sign In</button>
-                        <span class="pull-right">
-                            <a [routerLink]="['/account/register']">Register</a>
-                        </span>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" [(ngModel)]="_user.RememberMe" name="remember"> Remember me
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-12">
-                    <a class="btn btn-danger pull-left" [routerLink]="['/home']" data-dismiss="modal" aria-hidden="true">Cancel</a>
                 </div>
             </div>
         </div>

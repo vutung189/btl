@@ -1,44 +1,36 @@
-﻿import { Component, OnInit} from '@angular/core';
+﻿import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Registration } from '../../core/domain/registration';
-import { OperationResult } from '../../core/domain/operationResult';
-import { MembershipService } from '../../core/services/membership.service';
-import { NotificationService } from '../../core/services/notification.service';
+
 
 @Component({
-    selector: 'register',
-    providers: [MembershipService, NotificationService],
+    selector: 'profile',
     templateUrl: './app/components/account/profile.component.html'
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
+    
 
-    private _newUser: Registration;
+    constructor(public element: ElementRef) { }
 
-    constructor(public membershipService: MembershipService,
-        public notificationService: NotificationService,
-        public router: Router) { }
+    changeListner(event) {
+        var reader = new FileReader();
+        var image = this.element.nativeElement.querySelector('.image');
 
-    ngOnInit() {
-        this._newUser = new Registration('', '', '');
+
+        reader.onload = function (e: FileReaderEvent) {
+            console.log('e: ' + e.target.result);
+            var src = e.target.result;
+            image.src = src;
+        };
+  
+        reader.readAsDataURL(event.target.files[0]);
     }
+}
 
-    register(): void {
-        var _registrationResult: OperationResult = new OperationResult(false, '');
-        this.membershipService.register(this._newUser)
-            .subscribe(res => {
-                _registrationResult.Succeeded = res.Succeeded;
-                _registrationResult.Message = res.Message;
+interface FileReaderEventTarget extends EventTarget {
+    result: string
+}
 
-            },
-            error => console.error('Error: ' + error),
-            () => {
-                if (_registrationResult.Succeeded) {
-                    this.notificationService.printSuccessMessage('Dear ' + this._newUser.Username + ', please login with your credentials');
-                    this.router.navigate(['account/login']);
-                }
-                else {
-                    this.notificationService.printErrorMessage(_registrationResult.Message);
-                }
-            });
-    };
+interface FileReaderEvent extends Event {
+    target: FileReaderEventTarget;
+    getMessage(): string;
 }
