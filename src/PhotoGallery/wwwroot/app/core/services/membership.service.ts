@@ -11,7 +11,11 @@ export class MembershipService {
     private _accountLoginAPI: string = 'api/account/authenticate/';
     private _accountLogoutAPI: string = 'api/account/logout/';
 
-    constructor(public accountService: DataService) { }
+    private _accountGetAPI: string = 'api/account/get/';
+
+    public _baseUri: string = 'api/account/get/';
+
+    constructor(public accountService: DataService, public http: Http) { }
 
     register(newUser: Registration) {
 
@@ -48,4 +52,21 @@ export class MembershipService {
 
         return _user;
     }
+/*
+    getUser(Username: String) {
+
+        this.accountService.set(this._accountGetAPI);
+
+        return this.accountService.post(JSON.stringify(Username));
+    }
+*/
+    getUser(data?: any, mapJson: boolean = true) {
+
+        if (mapJson)
+            return this.http.post(this._baseUri, data)
+                .map(response => <any>(<Response>response).json());
+        else
+            return this.http.post(this._baseUri, "tung");
+    }
+
 }
