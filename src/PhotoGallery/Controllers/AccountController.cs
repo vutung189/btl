@@ -10,6 +10,8 @@ using PhotoGallery.ViewModels;
 using PhotoGallery.Infrastructure.Core;
 using PhotoGallery.Infrastructure;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,14 +21,16 @@ namespace PhotoGallery.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
         private readonly IMembershipService _membershipService;
         private readonly IUserRepository _userRepository;
         private readonly ILoggingRepository _loggingRepository;
 
-        public AccountController(IMembershipService membershipService,
+        public AccountController(IAuthorizationService authorizationService, IMembershipService membershipService,
             IUserRepository userRepository,
             ILoggingRepository _errorRepository)
         {
+            _authorizationService = authorizationService;
             _membershipService = membershipService;
             _userRepository = userRepository;
             _loggingRepository = _errorRepository;
@@ -198,7 +202,25 @@ namespace PhotoGallery.Controllers
 
             _result = new ObjectResult(_registrationResult);
             return _result;
-        }
+            }
 
+        [Route("get")]
+        [HttpPost]
+        
+        public IActionResult Get(string Username)
+        {
+                User user = _userRepository.GetSingleByUsername(Username);
+
+                IActionResult _result = new ObjectResult(false);
+                RegistrationViewModel _registrationResult = null;
+                _registrationResult = new RegistrationViewModel()
+                {
+                    Username = user.Username,
+                    Password = user.HashedPassword,
+                    Email = user.Email
+                };
+                _result = new ObjectResult(_registrationResult);
+                return _result;
+        }
     }
 }
