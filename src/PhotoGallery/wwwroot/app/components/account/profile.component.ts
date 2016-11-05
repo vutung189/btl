@@ -1,20 +1,28 @@
 ﻿import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MembershipService } from '../../core/services/membership.service';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Registration } from '../../core/domain/registration';
 
 
 @Component({
     selector: 'profile',
     templateUrl: './app/components/account/profile.component.html'
 })
-export class ProfileComponent {
+export class ProfileComponent  implements OnInit {
 
-    private user = JSON.parse(localStorage.getItem('user'));
-
+    public user = JSON.parse(localStorage.getItem('user'));
+    public userInfo: Registration;
+    public userName: string;
+    public password: string;
+    public email: string;
     constructor(public http: Http,public membershipService: MembershipService,public element: ElementRef) { }
+
+    ngOnInit() {
+        this.getUser();
+    }
 
     changeListner(event) {
         var reader = new FileReader();
@@ -29,24 +37,22 @@ export class ProfileComponent {
   
         reader.readAsDataURL(event.target.files[0]);
     }
-    getUser() {
+    getUser(){
         var userString ;
         console.log('user name : ', this.user.Username);
+     
+        var parameter = new URLSearchParams();
+        parameter.set('Username', this.user.Username);
 
-        var creds = "Username=tung";
-
-        var headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-        this.http.post('http://localhost:9823/api/account/get', creds, {
-            headers: headers
-        }).subscribe(res => {
+        this.http.get('http://localhost:9823/api/account/get', { search: parameter }).subscribe(res => {
             var data: any = res.json();
-            userString = data.Username;
+
+            console.log(res);
+            this.userName = data.Username;
+            this.password = data.Password;
+            this.email= data.Email;
+          
         });
-
-        console.log('ket qua : ', userString);
-
     }
 
 

@@ -205,7 +205,7 @@ namespace PhotoGallery.Controllers
             }
 
         [Route("get")]
-        [HttpPost]
+        [HttpGet]
         
         public IActionResult Get(string Username)
         {
