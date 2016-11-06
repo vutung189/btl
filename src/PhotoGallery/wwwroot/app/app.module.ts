@@ -45,4 +45,3 @@ class AppBaseRequestOptions extends BaseRequestOptions {
     bootstrap: [AppComponent]
 })
 export class AppModule { }
-

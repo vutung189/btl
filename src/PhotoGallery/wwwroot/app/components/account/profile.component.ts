@@ -1,28 +1,50 @@
-﻿import { Component, OnInit, ElementRef } from '@angular/core';
+﻿import { NgModule,Component, Injectable, OnInit, ElementRef, Directive} from '@angular/core';
 import { Router } from '@angular/router';
 import { MembershipService } from '../../core/services/membership.service';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Registration } from '../../core/domain/registration';
+
+import { FormsModule, FormBuilder, Validators, FormGroup, FormControl, FormControlDirective, NgControl } from '@angular/forms';
 
 
 @Component({
     selector: 'profile',
     templateUrl: './app/components/account/profile.component.html'
 })
-export class ProfileComponent  implements OnInit {
+
+export class ProfileComponent implements OnInit {
 
     public user = JSON.parse(localStorage.getItem('user'));
-    public userInfo: Registration;
     public userName: string;
     public password: string;
+    public confirmPassword: string;
     public email: string;
-    constructor(public http: Http,public membershipService: MembershipService,public element: ElementRef) { }
+    public userForm: FormGroup;
+
+    constructor(public http: Http, public membershipService: MembershipService, public element: ElementRef,
+        public fb: FormBuilder ) {
+
+    }
+
 
     ngOnInit() {
         this.getUser();
+
     }
+/*
+    matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+        console.log("check pass");
+        return (group: FormGroup) => {
+            let password = group.controls[passwordKey];
+            let passwordConfirmation = group.controls[passwordConfirmationKey];
+
+            if (password.value !== passwordConfirmation.value) {
+                return passwordConfirmation.setErrors({ notEquivalent: true })
+            }
+        }
+    }
+*/
 
     changeListner(event) {
         var reader = new FileReader();
@@ -50,14 +72,33 @@ export class ProfileComponent  implements OnInit {
             console.log(res);
             this.userName = data.Username;
             this.password = data.Password;
-            this.email= data.Email;
-          
+            this.email = data.Email;
+            this.confirmPassword = data.Password;
         });
     }
+    update(): void {
+
+        var parameter = new URLSearchParams();
+        parameter.set('Username', this.userName);
+        parameter.set('Password', this.password);
+
+        let body = JSON.stringify({ 'Username': this.userName, 'Password': this.password });
+
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let options = new RequestOptions({ headers: headers, method: "post" });
+
+        this.http.post('http://localhost:9823/api/account/update', parameter.toString(), options)
+            .subscribe(res => {
+                console.log(res);
+                alert("Update password succeeded")
+            },
+            error => console.error('Error: ' + error));
+    };
+
 
 
 }
-
+  
 interface FileReaderEventTarget extends EventTarget {
     result: string
 }

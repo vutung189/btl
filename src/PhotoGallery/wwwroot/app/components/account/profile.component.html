@@ -1,73 +1,69 @@
-﻿<div class="container">
+﻿
     <div class="container">
 
-        <button (click)="getUser()"> Get User</button>
+  
+            <h1>Your Profile</h1>
+            <hr>
+            <div class="row">
 
-        <h1>Your Profile</h1>
-        <hr>
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-3">
-                <div class="text-center">
-                    <img src="//placehold.it/100" class="image avatar img-circle" width="80" height="80" alt="avatar">
-                    <h6>Upload a different photo...</h6>
-                    <input type="file" (change)="changeListner($event)" class="form-control" />
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <img src="//placehold.it/100" class="image avatar img-circle" width="80" height="80" alt="avatar">
+                        <h6>Upload a different photo...</h6>
+                        <input type="file" (change)="changeListner($event)" class="form-control" />
 
+                    </div>
+                </div>
+
+                <div class="col-md-9 personal-info">
+
+                    <h3>User info</h3>
+
+                    <form class="form-horizontal" role="form" >
+   
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Username:</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="text" [value]="userName" [(ngModel)]="userName" name="userName" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Password:</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="password" id="password" [value]="password" [(ngModel)]="password"
+                                           name="password" >
+                                </div>
+                            </div>
+
+                        <!--
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Confirm password:</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="password" id="confirm_password" [value]="confirmPassword">
+                                </div>
+                            </div>
+                          -->
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Email:</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" type="text" placeholder="user@gmail.com" [value]="email" disabled="disabled">
+                                </div>
+                            </div>        
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-8">
+                                    <button type="button" [routerLink]="['/home']" (click)="update()" id="submit" class="btn btn-primary"  >Save Changes</button>
+
+
+                                    <span></span>
+                                    <a [routerLink]="['/home']" class="btn btn-default">Cancel</a>
+
+                                </div>
+                            </div>
+                        </form>
                 </div>
             </div>
-
-            <!-- edit form column -->
-            <div class="col-md-9 personal-info">
-
-                <h3>User info</h3>
-
-                <form class="form-horizontal" role="form">
-                    
-                   
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Username:</label>
-                        <div class="col-md-8">
-                            <input class="form-control" type="text" [value] = "userName">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Password:</label>
-                        <div class="col-md-8">
-                            <input class="form-control" type="password" [value]="password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Confirm password:</label>
-                        <div class="col-md-8">
-                            <input class="form-control" type="password" [value]="password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Email:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="text" placeholder="user@gmail.com" [value]="email">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-8">
-                            <a [routerLink]="['/home']"  class="btn btn-primary">Save Changes</a>
-                             
-
-                            <span></span>
-                            <a [routerLink]="['/home']" class="btn btn-default">Cancel</a>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <hr >
         </div>
-    </div>
-    <hr>
-
-
-
-
-</div>

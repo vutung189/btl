@@ -1,6 +1,9 @@
 ﻿import { NgModule }       from '@angular/core';
 import { FormsModule }    from '@angular/forms';
 import { CommonModule }   from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 import { DataService } from '../../core/services/data.service';
 import { MembershipService } from '../../core/services/membership.service';
@@ -16,7 +19,10 @@ import { accountRouting } from './routes';
     imports: [
         CommonModule,
         FormsModule,
-        accountRouting
+        accountRouting,
+        BrowserModule,
+        ReactiveFormsModule
+
     ],
     declarations: [
         AccountComponent,
