@@ -136,13 +136,16 @@ namespace PhotoGallery.Controllers
             IActionResult _result = new ObjectResult(false);
             GenericResult _registrationResult = null;
             //System.Web.HttpFileCollection hfc = System.Web.HttpContext.Current.Request.Files;
-            var uploads = Path.Combine(_environment.WebRootPath, "uploads");
+            var uploads = Path.Combine(_environment.WebRootPath, "images");
 
             try
             {
                 if (files != null)
                 {
                     var file = files.ElementAt(0);
+
+                    Console.WriteLine("file element at 0+ file name : " +file.FileName);
+
                     using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
                     {
                         await file.CopyToAsync(fileStream);
@@ -152,21 +155,29 @@ namespace PhotoGallery.Controllers
 
                     //filse.
 
-
-                    PhotoService _photoService = new PhotoService(_photoRepository);
-                    Photo _photo = _photoService.uploadPhoto(imageName, imagePath, ID_Album);
-
-                    if (_photo != null)
+                    _registrationResult = new GenericResult()
                     {
-                        _registrationResult = new GenericResult()
-                        {
-                            Succeeded = true,
-                            Message = "upload Photo succeeded"
-                        };
-                    }
+                        Succeeded = true,
+                        Message = "upload Photo succeeded  : " + (files.Count) +" ,  id alubum : " +(ID_Album)
+                    };
+
+
+                    //PhotoService _photoService = new PhotoService(_photoRepository);
+                    //Photo _photo = _photoService.uploadPhoto(imageName, imagePath, ID_Album);
+
+                    //if (_photo != null)
+                    //{
+                    //    _registrationResult = new GenericResult()
+                    //    {
+                    //        Succeeded = true,
+                    //        Message = "upload Photo succeeded"
+                    //    };
+                    //}
                 }
                 else
                 {
+                    Console.WriteLine("file  null ");
+
                     _registrationResult = new GenericResult()
                     {
                         Succeeded = false,
@@ -189,5 +200,6 @@ namespace PhotoGallery.Controllers
             _result = new ObjectResult(_registrationResult);
             return _result;
         }
+
     }
 }
