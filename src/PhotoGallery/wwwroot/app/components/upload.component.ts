@@ -1,12 +1,11 @@
 ﻿import {NgModule, Component, Injectable, OnInit, ElementRef, Directive} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import { Upload } from  '../core/domain/upload';
-import { DataService } from '../core/services/data.service';
-import { UtilityService } from '../core/services/utility.service';
-import { NotificationService } from '../core/services/notification.service';
-import { Router } from '@angular/router';
-import { OperationResult } from '../core/domain/operationResult';
+import { Upload } from '../core/domain/upload';
+import { AlbumPhotosComponent } from '../components/album-photos.component';
+import { Router, ActivatedRoute} from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+
 
 
 
@@ -16,29 +15,25 @@ import { OperationResult } from '../core/domain/operationResult';
 })
 export class UploadComponent {
     private _photoAPI: string = 'api/photos/upload';
-    private _upload: Upload;
-    private id_album: number = 3;
-
-
-    file: any[];
+    private id_album: number;
+    private sub: Subscription;
+    
     files: any[] = [];
-    trucks: any[];
-    errorMessage: any;
-    checked: boolean;
 
-
-
-    constructor(public http: Http, public createService: DataService, public utilityService: UtilityService,
-        public notificationService: NotificationService, public router: Router )
-    {
-
+    constructor(public http: Http, public router: Router, private route: ActivatedRoute) {
+        
     }
 
     ngOnInit() {
-        this.createService.set(this._photoAPI, 3);
 
+        this.sub = this.route.params.subscribe(params => {
+            this.id_album = params['id']; // (+) converts string 'id' to a number
+
+        });
+
+        console.log(this.id_album);
     }
-    
+
     changeListner(event) {
 
         console.log('bat dau goi ham');
@@ -47,35 +42,12 @@ export class UploadComponent {
 
     }
 
-
-
     ngOnChanges(): void {
 
     }
 
-    //onClickUploadDocument(event) {
-    //    console.log("clicked")
-    //    var file = event.target.files;
-
-    //    console.log("file: ", file);
-
-    //    for (let i = 0; i < file.length; i++) {
-    //        var fileInfo = file[i];
-    //        console.log("files are: ", fileInfo);
-    //        this.files.push(fileInfo);
-
-    //    }
-    //}
-
-
-
-
     tensukien(event) {
         console.log("fthuchien");
-       // this._upload = new Upload(this.id_album, this.files);
-
-//        var _uploadResult: OperationResult = new OperationResult(false, '');
-//        console.log(this._upload);
 
         let file: File = this.files[0];
 
@@ -85,31 +57,8 @@ export class UploadComponent {
             this.uploadFile(this.files[i]);
         }
 
-
-        //this.http.post('http://localhost:9823/api/photos/upload', formData)
-        //    .subscribe(res => {
-        //        console.log(res);
-        //    },
-        //    error => console.error('Error: ' + error));
-
-
-        //this.createService.post(this._upload)
-        //    .subscribe(res => {
-        //        _uploadResult.Succeeded = res.Succeeded;
-        //        _uploadResult.Message = res.Message;
-
-        //    },
-        //    error => console.error('Error: ' + error),
-        //    () => {
-        //        if (_uploadResult.Succeeded) {
-        //            this.notificationService.printSuccessMessage('Upload Success Photo :');
-        //            this.router.navigate(['albums']);
-        //        }
-        //        else {
-        //            this.notificationService.printErrorMessage(_uploadResult.Message);
-        //        }
-        //    });
         console.log("thuchienxong");
+        console.log(this.id_album);
     }
     uploadFile(files: File): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -132,9 +81,10 @@ export class UploadComponent {
 
             let formData = new FormData();   
             formData.append("files", files, files.name);
-            formData.append("ID_Album", 3);
+            formData.append("ID_Album", this.id_album);
 
             xhr.send(formData);
+            this.router.navigate(['albums']);
         });
     }
 

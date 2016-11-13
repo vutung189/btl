@@ -17,6 +17,8 @@ export class AlbumsComponent extends Paginated implements OnInit {
         public utilityService: UtilityService,
         public notificationService: NotificationService) {
         super(0, 0, 0);
+
+
     }
 
     ngOnInit() {
