@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { Album } from '../core/domain/album';
 import { Router, ActivatedRoute }  from '@angular/router';
 import { Photo } from '../core/domain/photo';
 import { Paginated } from '../core/common/paginated';
@@ -16,7 +17,7 @@ import { Subscription }  from 'rxjs/Subscription';
 export class AlbumPhotosComponent extends Paginated implements OnInit {
     private _albumsAPI: string = 'api/albums/';
     private _photosAPI: string = 'api/photos/';
-    private _albumId: string;
+    private _albumId: number;
     private _photos: Array<Photo>;
     private _displayingTotal: number;
     private _albumTitle: string;
@@ -39,8 +40,12 @@ export class AlbumPhotosComponent extends Paginated implements OnInit {
             this.dataService.set(this._albumsAPI, 12);
             this.getAlbumPhotos();
         });
+
+        console.log(this._albumId);
+
     }
 
+   
     getAlbumPhotos(): void {
         this.dataService.get(this._page)
             .subscribe(res => {

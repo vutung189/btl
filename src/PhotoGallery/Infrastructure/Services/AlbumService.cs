@@ -22,8 +22,6 @@ namespace PhotoGallery.Infrastructure.Services
         }
 
 
-
-
         public Album CreateAlbum(string title, string description, string username)
         {
             User user = _userRepository.GetSingleByUsername(username);

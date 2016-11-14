@@ -5,7 +5,8 @@
                 {{_albumTitle}}
                 <small>Page {{_page + 1}} of {{_pagesCount}}</small>
             </h1>
-            <a [routerLink]="['/upload']" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Add Photo</a>
+            <a [routerLink]="['/upload' , {id: _albumId}]" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Add Photo</a>
+
             <ol class="breadcrumb">
                 <li>
                     <a [routerLink]="['/home']">Home</a>
