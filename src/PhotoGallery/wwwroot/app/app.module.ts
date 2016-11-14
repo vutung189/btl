@@ -14,7 +14,6 @@ import { AlbumsComponent } from './components/albums.component';
 import { CreateComponent } from './components/create.component';
 import { routing } from './routes';
 import { UploadComponent } from './components/upload.component';
-import { UPLOAD_DIRECTIVES } from 'ng2-uploader';
 
 
 import { DataService } from './core/services/data.service';
@@ -41,7 +40,7 @@ class AppBaseRequestOptions extends BaseRequestOptions {
         AccountModule,
         ReactiveFormsModule
     ],
-    declarations: [AppComponent, AlbumPhotosComponent, HomeComponent, PhotosComponent, AlbumsComponent, CreateComponent, UploadComponent, UPLOAD_DIRECTIVES],
+    declarations: [AppComponent, AlbumPhotosComponent, HomeComponent, PhotosComponent, AlbumsComponent, CreateComponent, UploadComponent],
     providers: [DataService, MembershipService, UtilityService, NotificationService,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: RequestOptions, useClass: AppBaseRequestOptions }],

@@ -13,16 +13,21 @@ namespace PhotoGallery.Infrastructure.Services
         private static PhotoGalleryContext context;
         #region Variables
         private readonly IPhotoRepository _photoRepository;
+        private readonly IAlbumRepository _albumRepository;
+        private readonly IUserRepository _userRepository;
         #endregion
-        public PhotoService(IPhotoRepository photoRepository)
+        public PhotoService(IPhotoRepository photoRepository, IAlbumRepository albumRepository, IUserRepository userRepository)
         {
             _photoRepository = photoRepository;
+            _albumRepository = albumRepository;
+            _userRepository = userRepository;
         }
 
         public Photo uploadPhoto(string title, string uri, int albumID)
         {
-            Album album = context.Albums.FirstOrDefault(s => s.Id == albumID);
-            User user = context.Users.FirstOrDefault(s => s.Id == album.User_ID);
+            Album album = _albumRepository.GetSingle(albumID);
+            Album a = album;
+            User user = _userRepository.GetSingle(album.User_ID);
 
             var photo = new Photo() {
                 Title = title,

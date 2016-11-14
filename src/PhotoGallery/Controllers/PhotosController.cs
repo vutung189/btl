@@ -23,12 +23,18 @@ namespace PhotoGallery.Controllers
     {
         private IHostingEnvironment _environment;
         IPhotoRepository _photoRepository;
+        IAlbumRepository _albumRepository;
+        IUserRepository _userRepository;
         ILoggingRepository _loggingRepository;
-        public PhotosController(IPhotoRepository photoRepository, ILoggingRepository loggingRepository, IHostingEnvironment environment)
+        public PhotosController(IPhotoRepository photoRepository, ILoggingRepository loggingRepository, IHostingEnvironment environment ,
+            IAlbumRepository albumRepository, IUserRepository userRepository
+            )
         {
             _environment = environment;
             _photoRepository = photoRepository;
             _loggingRepository = loggingRepository;
+            _albumRepository = albumRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("{page:int=0}/{pageSize=12}")]
@@ -151,7 +157,7 @@ namespace PhotoGallery.Controllers
                         await file.CopyToAsync(fileStream);
                     }
                     string imageName = file.FileName;
-                    string imagePath = uploads;
+                    string imagePath = imageName;
 
                     //filse.
 
@@ -162,17 +168,17 @@ namespace PhotoGallery.Controllers
                     };
 
 
-                    //PhotoService _photoService = new PhotoService(_photoRepository);
-                    //Photo _photo = _photoService.uploadPhoto(imageName, imagePath, ID_Album);
+                    PhotoService _photoService = new PhotoService(_photoRepository, _albumRepository, _userRepository);
+                    Photo _photo = _photoService.uploadPhoto(imageName, imagePath, ID_Album);
 
-                    //if (_photo != null)
-                    //{
-                    //    _registrationResult = new GenericResult()
-                    //    {
-                    //        Succeeded = true,
-                    //        Message = "upload Photo succeeded"
-                    //    };
-                    //}
+                    if (_photo != null)
+                    {
+                        _registrationResult = new GenericResult()
+                        {
+                            Succeeded = true,
+                            Message = "upload Photo succeeded"
+                        };
+                    }
                 }
                 else
                 {

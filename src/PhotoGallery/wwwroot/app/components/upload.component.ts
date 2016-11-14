@@ -17,7 +17,7 @@ import { OperationResult } from '../core/domain/operationResult';
 export class UploadComponent {
     private _photoAPI: string = 'api/photos/upload';
     private _upload: Upload;
-    private id_album: number = 3;
+    private id_album: number;
 
 
     file: any[];
@@ -36,7 +36,7 @@ export class UploadComponent {
 
     ngOnInit() {
         this.createService.set(this._photoAPI, 3);
-
+        this.id_album = localStorage.getItem('id_album');
     }
     
     changeListner(event) {
@@ -44,7 +44,7 @@ export class UploadComponent {
         console.log('bat dau goi ham');
         this.files = event.srcElement.files;
         console.log(this.files);
-
+        this.id_album = localStorage.getItem('id_album');
     }
 
 
@@ -132,7 +132,7 @@ export class UploadComponent {
 
             let formData = new FormData();   
             formData.append("files", files, files.name);
-            formData.append("ID_Album", 3);
+            formData.append("ID_Album", 10);
 
             xhr.send(formData);
         });

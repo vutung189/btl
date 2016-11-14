@@ -34,6 +34,7 @@ export class AlbumPhotosComponent extends Paginated implements OnInit {
 
         this.sub = this.route.params.subscribe(params => {
             this._albumId = params['id']; // (+) converts string 'id' to a number
+            localStorage.setItem('id_album', JSON.stringify(this._albumId));
             this._albumsAPI += this._albumId + '/photos/';
             this.dataService.set(this._albumsAPI, 12);
             this.getAlbumPhotos();
