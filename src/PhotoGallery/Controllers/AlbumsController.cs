@@ -49,11 +49,14 @@ namespace PhotoGallery.Controllers
 
                     List<Album> _albums = null;
                     int _totalAlbums = new int();
-
+                    var username = Request.Cookies["user"];
+                    User user = _userRepository.GetSingleByUsername(username);
+                    int user_id = user.Id;
 
                     _albums = _albumRepository
                         .AllIncluding(a => a.Photos)
                         .OrderBy(a => a.Id)
+                        .Where(s => s.User_ID == user_id)
                         .Skip(currentPage * currentPageSize)
                         .Take(currentPageSize)
                         .ToList();

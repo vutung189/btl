@@ -80,6 +80,7 @@ export class UploadComponent {
             xhr.open('POST', 'http://localhost:9823/api/photos/upload', true);
 
             let formData = new FormData();
+            console.log(this.id_album);
             formData.append("files", files, files.name);
             formData.append("ID_Album", this.id_album);
 

@@ -14,8 +14,8 @@ namespace PhotoGallery.Infrastructure
         {
             context = (PhotoGalleryContext)serviceProvider.GetService(typeof(PhotoGalleryContext));
 
-            InitializePhotoAlbums(imagesPath);
-            InitializeUserRoles();
+            //InitializePhotoAlbums(imagesPath);
+            //InitializeUserRoles();
 
         }
 
@@ -99,8 +99,8 @@ namespace PhotoGallery.Infrastructure
             {
                 context.Users.Add(new User()
                 {
-                    Email = "chsakells.blog@gmail.com",
-                    Username = "chsakell",
+                    Email = "vutung189@gmail.com",
+                    Username = "vutung",
                     HashedPassword = "9wsmLgYM5Gu4zA/BSpxK2GIBEWzqMPKs8wl2WDBzH/4=",
                     Salt = "GTtKxJA6xJuj3ifJtTXn9Q==",
                     IsLocked = false,

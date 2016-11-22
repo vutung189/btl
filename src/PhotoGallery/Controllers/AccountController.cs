@@ -50,6 +50,7 @@ namespace PhotoGallery.Controllers
                 if (_userContext.User != null)
                 {
                     IEnumerable<Role> _roles = _userRepository.GetUserRoles(user.Username);
+                    Response.Cookies.Append("user", user.Username);
                     List<Claim> _claims = new List<Claim>();
                     foreach (Role role in _roles)
                     {
