@@ -60,13 +60,13 @@ export class MembershipService {
         return this.accountService.post(JSON.stringify(Username));
     }
 */
-    getUser(data?: any, mapJson: boolean = true) {
+    //getUser(data?: any, mapJson: boolean = true) {
 
-        if (mapJson)
-            return this.http.post(this._baseUri, data)
-                .map(response => <any>(<Response>response).json());
-        else
-            return this.http.post(this._baseUri, "tung");
-    }
+    //    if (mapJson)
+    //        return this.http.post(this._baseUri, data)
+    //            .map(response => <any>(<Response>response).json());
+    //    else
+    //        return this.http.post(this._baseUri, "tung");
+    //}
 
 }

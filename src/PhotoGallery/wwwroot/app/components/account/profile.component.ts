@@ -32,19 +32,6 @@ export class ProfileComponent implements OnInit {
         this.getUser();
 
     }
-/*
-    matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-        console.log("check pass");
-        return (group: FormGroup) => {
-            let password = group.controls[passwordKey];
-            let passwordConfirmation = group.controls[passwordConfirmationKey];
-
-            if (password.value !== passwordConfirmation.value) {
-                return passwordConfirmation.setErrors({ notEquivalent: true })
-            }
-        }
-    }
-*/
 
     changeListner(event) {
         var reader = new FileReader();

@@ -1,2 +1,17 @@
-﻿<input type="file" multiple (change)="changeListner($event)" accept="image/*" />
-<input type="button" value="upload" (click)="tensukien($even)"/>
+﻿
+<div class="container">
+    <div class="row">
+
+        <h1>Upload File</h1>
+        <hr>
+        <div class="col-md-6 col-md-offset-3">
+            <input type="file" multiple (change)="changeListner($event)" class="bg-success" accept="image/*" />
+            <br />
+
+            <input type="button" value="upload" class="btn btn-success" (click)="tensukien($even)" />
+        </div>
+
+    </div>
+</div>
+
+           
